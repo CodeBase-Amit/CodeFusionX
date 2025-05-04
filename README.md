@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
+=======
+<<<<<<< HEAD
+# React + Vite
+>>>>>>> 99fcdb8aaf8e5cb2aad2b23093ac94df9a40acdf
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -9,6 +14,7 @@ Currently, two official plugins are available:
 
 ## Expanding the ESLint configuration
 
+<<<<<<< HEAD
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
 ```js
@@ -52,3 +58,10 @@ export default tseslint.config({
   },
 })
 ```
+=======
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+=======
+# CodeFusionX
+This repo is of CodeFusionX - an Online IDE with videocalling and live chat feature with real-tile syncing and file management
+>>>>>>> cea73941f9df55dbc5b008ebaa817eb385f6d591
+>>>>>>> 99fcdb8aaf8e5cb2aad2b23093ac94df9a40acdf
