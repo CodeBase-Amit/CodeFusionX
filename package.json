@@ -5,11 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-<<<<<<< HEAD
+    "dev:all": "concurrently \"npm run dev:client\" \"npm run dev:ide-server\" \"npm run dev:mediasoup-server\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:ide-server": "cd ide-server && npm run dev",
+    "dev:mediasoup-server": "cd mediasoup-server && npm run dev",
+    "dev:local": "cross-env VITE_MEDIASOUP_SERVER_URL=http://localhost:3031 VITE_IDE_SERVER_URL=http://localhost:3021 npm run dev:all",
     "build": "tsc -b && vite build",
-=======
-    "build": "vite build",
->>>>>>> 99fcdb8aaf8e5cb2aad2b23093ac94df9a40acdf
+    "build:all": "npm run build:client && npm run build:ide-server && npm run build:mediasoup-server",
+    "build:client": "cd client && npm run build",
+    "build:ide-server": "cd ide-server && npm run build",
+    "build:mediasoup-server": "cd mediasoup-server && npm run build",
+    "start:all": "docker-compose -f docker-compose.dev-all.yml up",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -25,13 +31,9 @@
     "codemirror": "^6.0.1",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
-<<<<<<< HEAD
+    "mediasoup-client": "^3.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-=======
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
->>>>>>> 99fcdb8aaf8e5cb2aad2b23093ac94df9a40acdf
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.5.3",
@@ -45,15 +47,14 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
-<<<<<<< HEAD
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-=======
->>>>>>> 99fcdb8aaf8e5cb2aad2b23093ac94df9a40acdf
     "vite": "^6.3.1"
   }
 }

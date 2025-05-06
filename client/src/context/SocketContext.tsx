@@ -17,6 +17,16 @@ import { toast } from "react-hot-toast"
 import { Socket, io } from "socket.io-client"
 import { useAppContext } from "./AppContext"
 
+// Define the window ENV type if not already defined
+declare global {
+  interface Window {
+    ENV?: {
+      VITE_MEDIASOUP_SERVER_URL?: string;
+      VITE_IDE_SERVER_URL?: string;
+    };
+  }
+}
+
 const SocketContext = createContext<SocketContextType | null>(null)
 
 export const useSocket = (): SocketContextType => {
@@ -27,7 +37,13 @@ export const useSocket = (): SocketContextType => {
     return context
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000"
+// Use environment variable or window.ENV if available, or fallback to the IDE server URL
+const BACKEND_URL = 
+    import.meta.env.VITE_IDE_SERVER_URL || 
+    (window.ENV && window.ENV.VITE_IDE_SERVER_URL) || 
+    "http://localhost:3022"
+
+console.log('Connecting to IDE server at:', BACKEND_URL);
 
 const SocketProvider = ({ children }: { children: ReactNode }) => {
     const {
@@ -41,7 +57,9 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
     const socket: Socket = useMemo(
         () =>
             io(BACKEND_URL, {
-                reconnectionAttempts: 2,
+                reconnectionAttempts: 5,
+                timeout: 10000,
+                transports: ['websocket', 'polling']
             }),
         [],
     )
@@ -52,7 +70,7 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
             console.log("socket error", err)
             setStatus(USER_STATUS.CONNECTION_FAILED)
             toast.dismiss()
-            toast.error("Failed to connect to the server")
+            toast.error("Failed to connect to the server at " + BACKEND_URL)
         },
         [setStatus],
     )

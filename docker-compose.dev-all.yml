@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - VITE_MEDIASOUP_SERVER_URL=http://mediasoup-server:3032
+      - VITE_IDE_SERVER_URL=http://ide-server:3022
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app/client
+      - /app/client/node_modules
+    depends_on:
+      - ide-server
+      - mediasoup-server
+    networks:
+      - codefusionx-network
+
+  ide-server:
+    build:
+      context: ./ide-server
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3022:3022"
+    environment:
+      - PORT=3022
+    volumes:
+      - ./ide-server:/app
+      - /app/node_modules
+    networks:
+      - codefusionx-network
+
+  mediasoup-server:
+    build:
+      context: ./mediasoup-server
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3032:3032"
+      - "40000-49999:40000-49999/udp"
+    environment:
+      - PORT=3032
+      - MEDIASOUP_PORT=3032
+      - MEDIASOUP_LISTEN_IP=0.0.0.0
+      - MEDIASOUP_ANNOUNCED_IP=127.0.0.1
+    volumes:
+      - ./mediasoup-server:/app
+      - /app/node_modules
+    networks:
+      - codefusionx-network
+
+networks:
+  codefusionx-network:
+    driver: bridge 
